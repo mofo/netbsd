@@ -106,9 +106,11 @@ void	awin_cpu_hatch(struct cpu_info *);
 
 #define AWIN_CHIP_ID_A10	AWIN_SRAM_VER_KEY_A10
 #define AWIN_CHIP_ID_A13	AWIN_SRAM_VER_KEY_A13
-#define AWIN_CHIP_ID_A31	AWIN_SRAM_VER_KEY_A31
+#define AWIN_CHIP_ID_A31	AWIN_SRAM_VER_KEY_H3   //gb: FIXME
 #define AWIN_CHIP_ID_A23	AWIN_SRAM_VER_KEY_A23
 #define AWIN_CHIP_ID_A20	AWIN_SRAM_VER_KEY_A20
+#define AWIN_CHIP_ID_H3     AWIN_SRAM_VER_KEY_H3
+
 uint16_t awin_chip_id(void);
 const char *awin_chip_name(void);
 

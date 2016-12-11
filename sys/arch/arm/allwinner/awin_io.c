@@ -183,7 +183,8 @@ awinio_attach(device_t parent, device_t self, void *aux)
 	const char *chip_name = awin_chip_name();
 	const bool a10_p = chip_id == AWIN_CHIP_ID_A10;
 	const bool a20_p = chip_id == AWIN_CHIP_ID_A20;
-	const bool a31_p = chip_id == AWIN_CHIP_ID_A31;
+	//const bool a31_p = chip_id == AWIN_CHIP_ID_A31;
+    const bool a31_p = chip_id == AWIN_CHIP_ID_H3;
 	prop_dictionary_t dict = device_properties(self);
 
 	sc->sc_dev = self;

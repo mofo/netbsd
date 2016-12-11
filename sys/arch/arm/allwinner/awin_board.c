@@ -307,7 +307,8 @@ awin_chip_name(void)
 	case AWIN_CHIP_ID_A13: return "A13";
 	case AWIN_CHIP_ID_A20: return "A20";
 	case AWIN_CHIP_ID_A23: return "A23";
-	case AWIN_CHIP_ID_A31: return "A31";
+	//case AWIN_CHIP_ID_A31: return "A31";
+    case AWIN_CHIP_ID_H3:  return "H3";
 	default: return "unknown chip";
 	}
 }

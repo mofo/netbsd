@@ -26,6 +26,7 @@ defflag opt_allwinner.h				AWINETH_COUNTERS
 defflag opt_allwinner.h				ALLWINNER_A10
 defflag opt_allwinner.h				ALLWINNER_A20
 defflag opt_allwinner.h				ALLWINNER_A31
+defflag opt_allwinner.h             ALLWINNER_H3
 defflag opt_allwinner.h				ALLWINNER_A80
 defflag opt_allwinner.h				AWIN_GPIO_IGNORE_FW
 defflag opt_allwinner.h				AWIN_HDMI_DEBUG
@@ -78,7 +79,7 @@ device	awindma
 attach	awindma at awinio with awin_dma
 file	arch/arm/allwinner/awin_dma.c		awin_dma
 file	arch/arm/allwinner/awin_dma_a10.c	awin_dma & (allwinner_a10 | allwinner_a20)
-file	arch/arm/allwinner/awin_dma_a31.c	awin_dma & allwinner_a31
+file	arch/arm/allwinner/awin_dma_a31.c	awin_dma & (allwinner_a31 | allwinner_h3)
 
 # A10/A20 TWI (IIC)
 device	awiniic : i2cbus, i2cexec, mvi2c
@@ -86,9 +87,9 @@ attach	awiniic at awinio with awin_twi
 file	arch/arm/allwinner/awin_twi.c		awin_twi
 
 # A31 P2WI
-device	awinp2wi : i2cbus, i2cexec
-attach	awinp2wi at awinio with awin_p2wi
-file	arch/arm/allwinner/awin_p2wi.c		awin_p2wi
+#device	awinp2wi : i2cbus, i2cexec
+#attach	awinp2wi at awinio with awin_p2wi
+#file	arch/arm/allwinner/awin_p2wi.c		awin_p2wi
 
 # A10/A20 NAND controller
 device	awinnand : nandbus

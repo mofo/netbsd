@@ -256,7 +256,7 @@ filecore_label_read(dev_t dev, void (*strat)(struct buf *),
 		bp->b_blkno = cyl * heads * sectors;
 #ifdef DEBUG_LABEL
 		printf("%s: Found RiscIX partition table @ %08x\n",
-		    __func__, bp->b_blkno);
+            __func__, (unsigned int)bp->b_blkno);
 #endif
 		bp->b_cylinder = bp->b_blkno / lp->d_secpercyl;
 		bp->b_bcount = lp->d_secsize;
@@ -277,8 +277,8 @@ filecore_label_read(dev_t dev, void (*strat)(struct buf *),
 		rpt = (struct riscix_partition_table *)bp->b_data;
 #ifdef DEBUG_LABEL
 		for (loop = 0; loop < NRISCIX_PARTITIONS; ++loop)
-			printf("%s: p%d: %16s %08x %08x %08x\n", loop,
-			    __func__, rpt->partitions[loop].rp_name,
+            printf("%s: p%d: %16s %08x %08x %08x\n", 
+                __func__, loop, rpt->partitions[loop].rp_name,
 			    rpt->partitions[loop].rp_start,
 			    rpt->partitions[loop].rp_length,
 			    rpt->partitions[loop].rp_type);

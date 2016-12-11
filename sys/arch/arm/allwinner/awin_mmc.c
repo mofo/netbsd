@@ -413,6 +413,46 @@ awin_mmc_host_reset(sdmmc_chipset_handle_t sch)
 	return 0;
 }
 
+static int
+awin_mmc_host_clear_trans(sdmmc_chipset_handle_t sch)
+{
+
+    struct awin_mmc_softc *sc = sch;
+    uint32_t val, mask;
+    int retry;
+
+#ifdef AWIN_MMC_DEBUG
+    aprint_normal_dev(sc->sc_dev, "awin_mmc_host_clear_trans\n");
+#endif
+
+    mask = AWIN_MMC_GCTRL_FIFORESET | AWIN_MMC_GCTRL_DMARESET;
+    val = MMC_READ(sc, AWIN_MMC_GCTRL);
+    MMC_WRITE(sc, AWIN_MMC_GCTRL, val | mask);
+
+    retry = 1000;
+
+    while (--retry > 0) {
+        val = MMC_READ(sc, AWIN_MMC_GCTRL);
+        if ((val & mask) == 0)
+            break;
+        delay(10);
+    }
+
+    MMC_WRITE(sc, AWIN_MMC_RINT, 0xffff);  //clear unterrupts
+
+    // MMC_READ(sc, AWIN_MMC_RESP0);
+    // MMC_READ(sc, AWIN_MMC_RESP1);
+    // MMC_READ(sc, AWIN_MMC_RESP2);
+    // MMC_READ(sc, AWIN_MMC_RESP3);
+
+    if (retry == 0) {
+        aprint_normal_dev(sc->sc_dev, "failed to reset the phy after error\n");
+        return 1;
+    }
+
+    return 0;
+}
+
 static uint32_t
 awin_mmc_host_ocr(sdmmc_chipset_handle_t sch)
 {
@@ -809,8 +849,8 @@ awin_mmc_exec_command(sdmmc_chipset_handle_t sch, struct sdmmc_command *cmd)
 		}
 	}
 
-	cmd->c_error = awin_mmc_wait_rint(sc,
-	    AWIN_MMC_INT_ERROR|AWIN_MMC_INT_CMD_DONE, hz * 10);
+    cmd->c_error = awin_mmc_wait_rint(sc, AWIN_MMC_INT_CMD_DONE, hz * 10);
+
 	if (cmd->c_error == 0 && (sc->sc_intr_rint & AWIN_MMC_INT_ERROR))
 		cmd->c_error = EIO;
 	if (cmd->c_error) {
@@ -880,15 +920,18 @@ awin_mmc_exec_command(sdmmc_chipset_handle_t sch, struct sdmmc_command *cmd)
 
 done:
 	cmd->c_flags |= SCF_ITSDONE;
-	mutex_exit(&sc->sc_intr_lock);
 
 	if (cmd->c_error) {
 #ifdef AWIN_MMC_DEBUG
 		aprint_error_dev(sc->sc_dev, "i/o error %d\n", cmd->c_error);
 #endif
-		awin_mmc_host_reset(sc);
-		awin_mmc_update_clock(sc);
+        //
+        // gb: clear the transaction and the INTs
+        //
+        awin_mmc_host_clear_trans(sc);
 	}
+
+    mutex_exit(&sc->sc_intr_lock);
 
 	if (!sc->sc_use_dma) {
 		MMC_WRITE(sc, AWIN_MMC_GCTRL,

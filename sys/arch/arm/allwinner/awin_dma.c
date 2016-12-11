@@ -58,7 +58,7 @@ CFATTACH_DECL_NEW(awin_dma, sizeof(struct awin_dma_softc),
 static int
 awin_dma_match(device_t parent, cfdata_t cf, void *aux)
 {
-#if defined(ALLWINNER_A10) || defined(ALLWINNER_A20) || defined(ALLWINNER_A31)
+#if defined(ALLWINNER_A10) || defined(ALLWINNER_A20) || defined(ALLWINNER_A31) || defined(ALLWINNER_H3)
 	return awin_dma_sc == NULL;
 #else
 	return 0;
@@ -91,7 +91,7 @@ awin_dma_attach(device_t parent, device_t self, void *aux)
 		awin_dma_a10_attach(sc, aio, loc);
 		break;
 #endif
-#if defined(ALLWINNER_A31)
+#if defined(ALLWINNER_A31) || defined(ALLWINNER_H3)
 	case AWIN_CHIP_ID_A31:
 		awin_dma_a31_attach(sc, aio, loc);
 		break;
@@ -166,7 +166,7 @@ awin_dma_dump_regs(void)
 		awin_dma_a10_dump_regs(sc);
 		break;
 #endif
-#if defined(ALLWINNER_A31)
+#if defined(ALLWINNER_A31) || defined(ALLWINNER_H3)
 	case AWIN_CHIP_ID_A31:
 		awin_dma_a31_dump_regs(sc);
 		break;
