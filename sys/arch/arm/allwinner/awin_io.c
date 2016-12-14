@@ -121,8 +121,10 @@ static const struct awin_locators awin_locators[] = {
 	{ "awinusb", OFFANDSIZE(USB2), 1, NOINTR, A10|A20 },
 	{ "awinusb", OFFANDSIZE(A31_USB1), 0, NOINTR, A31 },
 	{ "awinusb", OFFANDSIZE(A31_USB2), 1, NOINTR, A31 },
+    { "awinusb", OFFANDSIZE(A31_USB3), 2, NOINTR, A31 },
+    { "awinusb", OFFANDSIZE(A31_USB4), 3, NOINTR, A31 },
 	{ "motg", OFFANDSIZE(USB0), NOPORT, AWIN_IRQ_USB0, A10|A20 },
-	{ "motg", OFFANDSIZE(A31_USB0), NOPORT, AWIN_A31_IRQ_USB0, A31 },
+	{ "motg", OFFANDSIZE(A31_USB0), NOPORT, AWIN_A31_IRQ_OTG, A31 },
 	{ "awinmmc", OFFANDSIZE(SDMMC0), 0, AWIN_IRQ_SDMMC0, A10|A20 },
 	{ "awinmmc", OFFANDSIZE(SDMMC1), 1, AWIN_IRQ_SDMMC1, A10|A20 },
 	{ "awinmmc", OFFANDSIZE(SDMMC2), 2, AWIN_IRQ_SDMMC2, A10|A20 },
@@ -213,8 +215,11 @@ awinio_attach(device_t parent, device_t self, void *aux)
 			snprintf(prop_name, sizeof(prop_name),
 			    "no-%s-%d", loc->loc_name, loc->loc_port);
 		}
+
 		if (prop_dictionary_get_bool(dict, prop_name, &skip) && skip)
 			continue;
+
+        //aprint_normal("gb: prop_found and good = %s flags: 0x%08x\n", prop_name, loc->loc_flags);
 
 		if (loc->loc_flags & AWINIO_ONLY) {
 			if (a10_p && !(loc->loc_flags & AWINIO_ONLY_A10))
@@ -224,6 +229,8 @@ awinio_attach(device_t parent, device_t self, void *aux)
 			if (a31_p && !(loc->loc_flags & AWINIO_ONLY_A31))
 				continue;
 		}
+
+        //aprint_normal("gb: prop_found and good = %s flags: 0x%08x - Install\n", prop_name, loc->loc_flags);
 
 		struct awinio_attach_args aio = {
 			.aio_loc = *loc,

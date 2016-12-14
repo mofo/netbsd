@@ -215,7 +215,8 @@ awin_mmc_attach(device_t parent, device_t self, void *aux)
 	prop_dictionary_get_bool(cfg, "dma", &sc->sc_use_dma);
 
 	aprint_naive("\n");
-	aprint_normal(": SD3.0 (%s)\n", sc->sc_use_dma ? "DMA" : "PIO");
+    aprint_normal(": SD3.0 (%s)\n", sc->sc_use_dma ? "DMA" : "PIO");
+    aprint_normal(": GIAN MMC (0x%08x)\n", (unsigned int)loc->loc_offset);
 
 	awin_pll6_enable();
 

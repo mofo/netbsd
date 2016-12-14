@@ -95,7 +95,7 @@ ehciprintf(const char *fmt, ...)
 
 #define DPRINTF(x)	do { if (ehcidebug) ehciprintf x; } while(0)
 #define DPRINTFN(n,x)	do { if (ehcidebug>(n)) ehciprintf x; } while (0)
-int ehcidebug = 0;
+int ehcidebug = 1;
 #else
 #define DPRINTF(x)
 #define DPRINTFN(n,x)
@@ -366,6 +366,8 @@ ehci_init(ehci_softc_t *sc)
 
 	sc->sc_offs = EREAD1(sc, EHCI_CAPLENGTH);
 
+    DPRINTF(("ehci_init: sc->sc_offs: 0x%08x\n", sc->sc_offs));
+
 	vers = EREAD2(sc, EHCI_HCIVERSION);
 	aprint_verbose("%s: EHCI version %x.%x\n", device_xname(sc->sc_dev),
 	       vers >> 8, vers & 0xff);
@@ -600,6 +602,8 @@ ehci_intr(void *v)
 		return 0;
 
 	mutex_spin_enter(&sc->sc_intr_lock);
+
+    DPRINTF(("%s: ehci_intr\n", device_xname(sc->sc_dev)));
 
 	if (sc->sc_dying || !device_has_power(sc->sc_dev))
 		goto done;

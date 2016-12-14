@@ -165,10 +165,10 @@ makeoptions	DEBUG="-g"	# compile full symbol table
 makeoptions	COPY_SYMTAB=1
 
 ## USB Debugging options
-options USB_DEBUG
-options EHCI_DEBUG
-options OHCI_DEBUG
-options UHUB_DEBUG
+#options USB_DEBUG
+#options EHCI_DEBUG
+#options OHCI_DEBUG
+#options UHUB_DEBUG
 
 
 # Valid options for BOOT_ARGS:
@@ -278,8 +278,9 @@ awinhdmiaudio0	at awinio0
 audio1		at awinhdmiaudio0
 
 # On-board USB
-awinusb0	at awinio0 port 0
-awinusb1	at awinio0 port 1
+awinusb0	at awinio0 port 1
+awinusb1	at awinio0 port 2
+awinusb2    at awinio0 port 3
 ohci*		at awinusb?
 ehci*		at awinusb?
 usb*		at ohci?

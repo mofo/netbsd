@@ -111,6 +111,9 @@ awin_otg_attach(device_t parent, device_t self, void *aux)
 		    AWIN_AHB_GATING0_REG, AWIN_A31_AHB_GATING0_USB0, 0);
 		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
 		    AWIN_A31_AHB_RESET0_REG, AWIN_A31_AHB_RESET0_USBOTG_RST, 0);
+
+        aprint_normal("starting the USB Phy\n");
+
 	} else {
 		awin_reg_set_clear(aio->aio_core_bst, aio->aio_ccm_bsh,
 		    AWIN_AHB_GATING0_REG, AWIN_AHB_GATING0_USB0, 0);

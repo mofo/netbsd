@@ -434,6 +434,10 @@ initarm(void *arg)
 
 	}
 
+    // gb: HACK
+
+    strlcpy(bootargs, "root=/dev/ld0f", 15);
+
 	boot_args = bootargs;
 	parse_mi_bootargs(boot_args);
 

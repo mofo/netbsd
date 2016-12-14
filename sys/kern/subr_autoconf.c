@@ -1559,8 +1559,8 @@ config_attach_loc(device_t parent, cfdata_t cf,
 		aprint_naive("%s (root)", device_xname(dev));
 		aprint_normal("%s (root)", device_xname(dev));
 	} else {
-		aprint_naive("%s at %s", device_xname(dev), device_xname(parent));
-		aprint_normal("%s at %s", device_xname(dev), device_xname(parent));
+		aprint_naive("%s at %s - gian", device_xname(dev), device_xname(parent));
+		aprint_normal("%s at %s - gian", device_xname(dev), device_xname(parent));
 		if (print)
 			(void) (*print)(aux, NULL);
 	}
@@ -1582,15 +1582,23 @@ config_attach_loc(device_t parent, cfdata_t cf,
 	}
 	device_register(dev, aux);
 
+    //aprint_normal("After device register\n");
+
 	/* Let userland know */
 	devmon_report_device(dev, true);
 
+    //aprint_normal("After device devmon_report_device\n");
+
 	(*dev->dv_cfattach->ca_attach)(parent, dev, aux);
+
+    //aprint_normal("After device ca_attach\n");
 
 	if (!device_pmf_is_registered(dev))
 		aprint_debug_dev(dev, "WARNING: power management not supported\n");
 
 	config_process_deferred(&deferred_config_queue, dev);
+
+    //aprint_normal("Before device device_register_post_config\n");
 
 	device_register_post_config(dev, aux);
 	return dev;

@@ -192,6 +192,13 @@ awin_gige_attach(device_t parent, device_t self, void *aux)
 		    AWIN_GMAC_CLK_PIT|AWIN_GMAC_CLK_TCS);
 	}
 
+    uint32_t value = 0;
+
+    value = bus_space_read_4(sc->sc_core.sc_bst, aio->aio_ccm_bsh,
+            0x54);
+
+    aprint_normal("gb: GIGE ADDR0_LOW = 0x%08x \n", value);
+
 	dwc_gmac_attach(&sc->sc_core, GMAC_MII_CLK_150_250M_DIV102);
 }
 
