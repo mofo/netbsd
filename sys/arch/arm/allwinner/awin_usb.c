@@ -467,71 +467,7 @@ awinusb_attach(device_t parent, device_t self, void *aux)
 		awin_reg_set_clear(usbsc->usbsc_bst, aio->aio_ccm_bsh,
 		    AWIN_USB_CLK_REG, awinusb_usb_clk_set[loc->loc_port], 0);
 	}
-
-    // uint32_t value = 0;
-
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         loc->loc_offset + (0x4 * i));
-    //     aprint_normal("gb: EHCI offset value - %d = 0x%08x \n", i, value);
-    // }
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_ccm_bsh,
-    //         AWIN_AHB_GATING0_REG);
-
-    // aprint_normal("gb: EHCI AWIN_AHB_GATING0_REG = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_ccm_bsh,
-    //         AWIN_USB_CLK_REG);
-
-    // aprint_normal("gb: EHCI AWIN_USB_CLK_REG = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_ccm_bsh,
-    //         AWIN_A31_AHB_RESET0_REG);
-
-    // aprint_normal("gb: EHCI AWIN_A31_AHB_RESET0_REG = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_ccm_bsh,
-    //         AWIN_AXI_GATING_REG);
-
-    // aprint_normal("gb: EHCI AWIN_AXI_GATING_REG = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_ccm_bsh,
-    //         AWIN_CPU_AHB_APB0_CFG_REG);
-
-    // aprint_normal("gb: EHCI AWIN_CPU_AHB_APB0_CFG_REG = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         loc->loc_offset + 0x800);
-
-    // aprint_normal("gb: EHCI HCI_ICR = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         loc->loc_offset + 0x804);
-
-    // aprint_normal("gb: EHCI HSIC_STATUS = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         0x1B000);
-
-    // aprint_normal("gb: EHCI HSIC_STATUS = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         0x21800);
-
-    // aprint_normal("gb: EHCI HSIC_STATUS = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         AWIN_USB1_OFFSET);
-
-    // aprint_normal("gb: EHCI AWIN_USB1_OFFSET = 0x%08x \n", value);
-
-    // value = bus_space_read_4(aio->aio_core_bst, aio->aio_core_bsh,
-    //         AWIN_USB2_OFFSET);
-
-    // aprint_normal("gb: EHCI AWIN_USB2_OFFSET = 0x%08x \n", value);
-
+    
 	/*
 	 * Allow USB DMA engine access to the DRAM.
 	 */
