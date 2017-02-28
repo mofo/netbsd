@@ -278,9 +278,9 @@ awinhdmiaudio0	at awinio0
 audio1		at awinhdmiaudio0
 
 # On-board USB
-awinusb0	at awinio0 port 1
-awinusb1	at awinio0 port 2
-awinusb2    at awinio0 port 3
+awinusb1	at awinio0 port 1
+awinusb2	at awinio0 port 2
+awinusb3    at awinio0 port 3
 ohci*		at awinusb?
 ehci*		at awinusb?
 usb*		at ohci?
