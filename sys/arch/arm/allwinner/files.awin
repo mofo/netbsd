@@ -34,6 +34,16 @@ defflag opt_allwinner.h				AWIN_TCON_DEBUG
 defflag opt_allwinner.h				AWIN_DEBE_DEBUG
 defparam opt_allwinner.h			AWIN_DEBE_VIDEOMEM
 
+# H3 test driver
+device  awingbtest { [port=-1] } : myrootdevice
+attach  awingbtest at mainbus with awin_gbtest
+file    arch/arm/allwinner/awin_gbtest.c       awin_gbtest | allwinner_h3
+
+# H3 test driver
+device  awingbcnt : mydevice
+attach  awingbcnt at awingbtest with awin_awingbcnt
+file    arch/arm/allwinner/awin_gbtestconnect.c       awin_awingbcnt | awin_io | allwinner_h3
+
 # SoC I/O attach point
 device	awinio { [port=-1] } : bus_space_generic
 attach	awinio at mainbus with awin_io

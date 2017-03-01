@@ -198,7 +198,10 @@ armgic0		at armperiph?				# Interrupt Controller
 armgtmr0	at armperiph?				# ARM Generic Timer
 
 # SoC I/O
-awinio0		at mainbus?
+awinio0     at mainbus?
+
+awingbtest0     at mainbus?
+awingbcnt0     at awingbtest0
 
 # SD/MMC controllers
 awinmmc0	at awinio0 port 0
